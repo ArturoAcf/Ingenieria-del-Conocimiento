@@ -18,7 +18,7 @@
     (preguntas esfuerzo)
     (preguntas promedio)
     ; Añadir teóricas/prácticas
-    ; Añadir por programación
+    ; Añadir programación
 )
 
 (deftemplate Respuestas_factibles
