@@ -15,8 +15,9 @@
     (preguntas hardware)
     (preguntas sofwtare)
     (preguntas matematicas)
-    (preguntas esfuerzo)
+    (preguntas esfuerzo) ; Sustituir por programación
     (preguntas promedio)
+    ; Añadir teóricas/prácticas
 )
 
 (deftemplate Respuestas_factibles
