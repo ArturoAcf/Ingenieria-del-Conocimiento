@@ -228,13 +228,7 @@
 )
 
 
-; Consejo Final
-(defrule mostrarRamaFinal
-  (declare (salience -9999))
-  (consejo ?r)
-  =>
-  (printout t "Te recomiendo la rama de " ?r crlf)
-)
+
 
 
 
@@ -422,6 +416,17 @@
 )
 
 
+(defmodule respuestas)
+
+; Consejo Final
+(defrule mostrarRamaFinal
+  (declare (salience -9999))
+  (consejo ?r)
+  =>
+  (printout t "Te recomiendo la rama de " ?r crlf)
+)
+
+
 (defrule MostrarRecomendacion
     (ans ?NombreRama ?motiv)
         =>
@@ -442,3 +447,4 @@
     (printout t crlf "Con las respuestas que me has dado no puedo recomendarte nada con seguridad te aconsejo que vuelvas a probar pensando un poco mejor las respuestas" crlf)
     (retract ?rule)
 )
+
