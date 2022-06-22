@@ -1,7 +1,6 @@
-;;;;; - - - Hechos del sistema - - - ;;;;;
-
-
-(defmodule sistemaA)
+;;;;; Nombres: Arturo Alonso Carbonero y Victor Junco Sánchez ;;;;;
+;;;;; Grupo: 3ºA - A1 ;;;;;
+;;;;; Práctica 4 - Tarea 1 ;;;;;
 
 ; Representación de las ramas
 (deffacts Ramas
