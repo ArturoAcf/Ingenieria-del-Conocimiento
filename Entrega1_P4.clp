@@ -213,7 +213,7 @@
 ; Nota media
 (defrule notamedia
   (module BETA)
-  (declare (salience 5000)) ; Es lo primero que le preguntaría
+  (declare (salience 50)) ; Es lo primero que le preguntaría
   =>
   (printout t "Bienvenido, dime cual es tu nota media hasta ahora redondeando a la alta por favor: " crlf)
   (assert (Calificacion_media (read))) ; Obtenemos la nota media y podemos saber si es alta, media o baja
@@ -222,7 +222,7 @@
 ; Almacena la nota media y guarda un hecho para indicar si es baja, media o alta
 (defrule almacenarNota
   (module BETA)
-  (declare (salience 4999))
+  (declare (salience 49))
   (Calificacion_media ?n)
   (Nota ?x ?y ?val)
   (test (> ?n ?x))
@@ -234,7 +234,7 @@
 ; Matemáticas
 (defrule mates
   (module BETA)
-  (declare (salience 4995))
+  (declare (salience 48))
   =>
   (printout t "Te gustan las matematicas?" crlf)
   (assert (mates (read)))
@@ -243,7 +243,7 @@
 ; Interés por la programación
 (defrule Iprogramacion
   (module BETA)
-  (declare (salience 4999))
+  (declare (salience 49))
   =>
   (printout t "Tienes interes por la programacion?" crlf)
   (assert (programacion (read)))
@@ -251,7 +251,7 @@
 
 ; Si le gustan las matemáticas y tiene nota media alta o media
 (defrule matesAlta
-  (declare (salience 4800))
+  (declare (salience 47))
   (module BETA)
   (test (neq notaEs Baja)) ; Media o alta
   (mates si)
@@ -265,7 +265,7 @@
 (defrule algoritmos
   
   (module BETA)
-  (declare (salience 4799))
+  (declare (salience 46))
   (podriaSer Computacion_y_Sistemas_Inteligentes)
   =>
   (printout t "Te gustaria desarrollar algoritmos o algo similar?" crlf)
@@ -283,7 +283,7 @@
 ; Hardware / Software
 (defrule hardsoft
 (module BETA)
-  (declare (salience 4000))
+  (declare (salience 40))
   =>
   (printout t "Prefieres software o hardware?" crlf)
   (assert (preferencia_sh (read)))
@@ -292,7 +292,7 @@
 ; Si tiene nota media o alta y le interesa la programación
 (defrule matesAltMedProg
 (module BETA)
-  (declare (salience 3999))
+  (declare (salience 39))
   (test (neq notaEs Baja)) ; Media o alta
   (programacion si)
   (preferencia_sh software)
@@ -304,7 +304,7 @@
 ; Si le gustan las mates, la programacion y prefiere hardware
 (defrule csiHard
 (module BETA)
-  (declare (salience 3950))
+  (declare (salience 35))
   (preferencia_sh hardware)
   (podriaSer Computacion_y_Sistemas_Inteligentes)
   =>
@@ -315,7 +315,7 @@
 ; Si le gusta el hardware y no las mates
 (defrule puedeTI
 (module BETA)
-  (declare (salience 3949))
+  (declare (salience 36))
   (preferencia_sh hardware)
   (mates no)
   =>
@@ -326,7 +326,7 @@
 ; Robótica
 (defrule robotica
 (module BETA)
-  (declare (salience 3950))
+  (declare (salience 37))
   (podriaSer Ingenieria_de_Computadores)
   =>
   (printout t "Te gusta la robotica?" crlf)
@@ -336,7 +336,7 @@
 ; Prácticas / Teóricas
 (defrule practheo
 (module BETA)
-  (declare (salience 3900))
+  (declare (salience 38))
   =>
   (printout t "Prefieres asignaturas practicas o teoricas?" crlf)
   (assert (preferencia_tp (read)))
