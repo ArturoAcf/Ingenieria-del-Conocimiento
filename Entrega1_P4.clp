@@ -228,7 +228,6 @@
   (declare (salience 3999))
   (module BETA)
   (test (neq notaEs Baja)) ; Media o alta
-  (programacion si)
   (preferencia_sh software)
   =>
   (assert (podriaSer Ingenieria_del_Software))
@@ -281,7 +280,6 @@
   (declare (salience -5002))
   (module BETA)
   (podriaSer Ingenieria_del_Software)
-  (test (or (neq preferencia_tp teoricas) (neq preferencia_tp practicas)))
   =>
   (printout t "Te gustan las bases de datos?" crlf)
   (assert (gustaBD (read)))
@@ -366,7 +364,7 @@
     ?rule <- (preguntas hardware)
         =>
     (retract ?rule)
-    
+
     (printout t crlf "------------" crlf  "COMIENZAN LAS PREGUNTAS DEL EXPERTO VICTOR " crlf "----------" crlf)
     (printout t crlf " ***  ¿Te gusta el hardware? "  crlf " Las posibles respuestas son  [si , no , no se] " crlf )
     (assert(answer hardware (lowcase (readline))))
@@ -447,6 +445,7 @@
      (module GAMMA)
         =>
     (printout t crlf "La rama que se te recomienda el experto Victor es  " ?NombreRama "." crlf " " ?motiv "." crlf)
+    (printout t crlf "Recuerda que esto es solo una recomendacion, lo mejor es que si no estas conforme vuelvas a repetir el programa cambiando un poco los datos o investigues por tu cuenta las ramas " crlf)
 
 )
 
