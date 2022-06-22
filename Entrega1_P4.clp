@@ -1,22 +1,7 @@
-; (defmodule hechos)
-  ; (export deftemplate rama))
-
-;;;;; - - - Hechos del sistema - - - ;;;;;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+;;;;; Arturo Alonso Carbonero ;;;;;
+;;;;; Victor Junco Sánchez ;;;;;
+;;;;; Grupo: 3ºA - A1 ;;;;;
+;;;;; Práctica 4 - Tarea 1 ;;;;;
 
 
 ; Representación de las ramas
