@@ -137,7 +137,7 @@
         =>
     (printout t crlf "Comienza el Sistema encargado de dar una recomendacion sobre la eleccion de una rama en Ingenieria Informatica en la UGR " crlf)
     (printout t crlf "A continuacion se le haran una serie de preguntas responda de entre las posibles respuestas la que mas le represente " crlf)
-    (printout t crlf "Las primeras preguntas correspondes al experto Arturo Alonso Carbonero")
+    (printout t crlf "Las primeras preguntas correspondes al experto Arturo Alonso Carbonero" crlf)
     (assert (razonar))
     (assert (module BETA))
 )
@@ -301,48 +301,56 @@
 ; Establece el hecho 'consejo Ingenieria_de_Computadores'
 (defrule consejo1
   (declare (salience -5000))
-  (module BETA)
+  ?regla <- (module BETA)
   (podriaSer Ingenieria_de_Computadores)
   (preferencia_tp practicas)
   (robotica si)
   =>
+  (retract ?regla)
+  (assert (module ALFA))
   (assert (consejo Ingenieria_de_Computadores))
 )
 
 ; Establece el hecho 'consejo Computacion_y_Sistemas_Inteligentes'
 (defrule consejo2
   (declare (salience -5001))
-  (module BETA)
+  ?regla <- (module BETA)
   (podriaSer Computacion_y_Sistemas_Inteligentes)
   (algoritmos si)
   =>
+  (retract ?regla)
+  (assert (module ALFA))
   (assert (consejo Computacion_y_Sistemas_Inteligentes))
 )
 
 ; Establece el hecho 'consejo Ingenieria_del_Software'
 (defrule consejo3
   (declare (salience -5002))
-  (module BETA)
+  ?regla <- (module BETA)
   (podriaSer Ingenieria_del_Software)
   =>
+  (retract ?regla)
+  (assert (module ALFA))
   (assert (consejo Ingenieria_del_Software))
 )
 
 ; Establece el hecho 'consejo Sistemas_de_Informacion'
 (defrule consejo4
   (declare (salience -5003))
-  (module BETA)
-  ?regla <- (consejo Ingenieria_del_Software)
+  ?regla <- (module BETA)
+  ?regla2 <- (consejo Ingenieria_del_Software)
   (podriaSer Sistemas_de_Informacion)
   =>
   (retract ?regla)
+  (assert (module ALFA))
+  (retract ?regla2)
   (assert (consejo Sistemas_de_Informacion))
 )
 
 ; Establece el hecho 'consejo Tecnologias_de_la_Informacion'
 (defrule consejo5
-  ?regla <- (module BETA)
   (declare (salience -5004))
+  ?regla <- (module BETA)
   (or (podriaSer Ingenieria_de_Computadores) (podriaSer Tecnologias_de_la_Informacion))
   (test (neq robotica si))
   =>
@@ -373,7 +381,7 @@
 )
 
 (defrule PreguntaMatematicas
-    (razonar) 
+    (razonar)
     (module ALFA)
     ?rule <- (preguntas matematicas)
         =>
@@ -430,23 +438,25 @@
 )
 
 (defrule MostrarRecomendacion
+  (declare (salience -9999))
+
     (ans ?NombreRama ?motiv)
      (consejo ?r)
      (module GAMMA)
         =>
     (printout t crlf "La rama que se te recomienda el experto Victor es  " ?NombreRama "." crlf " " ?motiv "." crlf)
     (printout t crlf "Recuerda que esto es solo una recomendacion, lo mejor es que si no estas conforme vuelvas a repetir el programa cambiando un poco los datos o investigues por tu cuenta las ramas " crlf)
-    
+
 )
 
 (defrule NoTengoRespuesta
-    (declare (salience -10))
+    (declare (salience -9999))
 
     (answer hardware ? )
     (answer sofwtare ? )
     (answer matematicas ?)
     (answer promedio?|esfuerzo ? )
-    (module gamma)
+    (module GAMMA)
     ?rule <- (razonar)
         =>
     (printout t crlf "Con las respuestas que me has dado no puedo recomendarte nada con seguridad te aconsejo que vuelvas a probar pensando un poco mejor las respuestas" crlf)
