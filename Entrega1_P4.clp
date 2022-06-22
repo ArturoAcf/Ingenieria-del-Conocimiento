@@ -24,6 +24,82 @@
 )
 
 
+(defrule inicio
+    (declare (salience 100))
+        =>
+    (printout t crlf "Comienza el Sistema encargado de dar una recomendacion sobre la eleccion de una rama en Ingenieria Informatica en la UGR " crlf)
+    (printout t crlf "A continuacion se le haran una serie de preguntas responda de entre las posibles respuestas la que mas le represente " crlf)
+    (printout t crlf "Las primeras preguntas correspondes al experto Victor Junco Sánchez")
+    (assert (razonar))
+    (assert (module ALFA))
+)
+(defrule PreguntaHardware
+    (razonar)
+    (module ALFA)
+    ?rule <- (preguntas hardware)
+        =>
+    (retract ?rule)
+    (printout t crlf " ***  ¿Te gusta el hardware? "  crlf " Las posibles respuestas son  [si , no , no se] " crlf )
+    (assert(answer hardware (lowcase (readline))))
+)
+
+(defrule PreguntaSowftare
+    (razonar)
+     (module ALFA)
+    ?rule <- (preguntas sofwtare)
+        =>
+    (retract ?rule)
+    (printout t crlf " *** ¿Dirias que te gusta todo aquello relacionado con el sofwtare ? " crlf " Las posibles respuestas son  [si, no, no se] " crlf)
+    (assert(answer sofwtare (lowcase (readline))))
+)
+
+(defrule PreguntaMatematicas
+    (razonar) 
+    (module ALFA)
+    ?rule <- (preguntas matematicas)
+        =>
+    (retract ?rule)
+    (printout t crlf " *** ¿ Dirias que te gustan las matematicas?" crlf " Las posibles respuestas son [ si , no , no se] " crlf)
+    (assert(answer matematicas (lowcase(readline))))
+)
+(defrule PreguntaNotaMedia
+    (razonar)
+    (module ALFA)
+    ?rule <- (preguntas promedio)
+        =>
+    (retract ?rule)
+    (printout t  crlf " **** ¿Como dirias que es tu nota media? " crlf " Si es mayor que 8 di alto. Si esta entre 6 y 8 di medio . Si es menor que 6 di bajo" crlf )
+    (assert(answer promedio (lowcase(readline))))
+)
+
+(defrule PreguntaEsfuerzo
+    (razonar)
+    (module ALFA)
+    ?rule <- (preguntas esfuerzo)
+        =>
+    (printout t crlf " *** ¿Cual suele ser tu nivel de esfuerzo para hacer una tarea?." crlf " Las posibles respuestas son  [ mucho, medio o poco ] " crlf )
+    (assert(answer esfuerzo (lowcase(readline))))
+    (assert (module BETA))
+)
+
+
+(defrule Recomienda
+    (declare (salience 100))
+    ?rule <- (razonar)
+    (answer hardware ?a)
+    (answer sofwtare ?b)
+    (answer promedio ?c)
+    (answer matematicas ?d)
+    (answer esfuerzo ?e)
+    (recomendacion (Rama_Abrev ?nombre_completo) (Gusta_Hardware $? ?a $?) (Gusta_Software $? ?b $?) (Gusta_Esfuerzo $? ?e $?) (NotaMedia $? ?c $?) (Gusta_Matematicas $? ?d $?) (motivo ?motiv))
+    (rama (abreviatura ?nombre_completo) (nombre_completo ?NombreRama))
+    (module ALFA)
+        =>
+    (retract ?rule)
+    (assert(ans ?NombreRama ?motiv))
+)
+
+
 ;;;;; - - - Reglas del sistema - - - ;;;;;
 
 ; Nota media
@@ -344,80 +420,7 @@
   )
 
 
-(defrule inicio
-    (declare (salience 100))
-        =>
-    (printout t crlf "Comienza el Sistema encargado de dar una recomendacion sobre la eleccion de una rama en Ingenieria Informatica en la UGR " crlf)
-    (printout t crlf "A continuacion se le haran una serie de preguntas responda de entre las posibles respuestas la que mas le represente " crlf)
-    (printout t crlf "Las primeras preguntas correspondes al experto Victor Junco Sánchez")
-    (assert (razonar))
-    (assert (moduloALFA))
-)
-(defrule PreguntaHardware
-    (razonar)
-    (module ALFA)
-    ?rule <- (preguntas hardware)
-        =>
-    (retract ?rule)
-    (printout t crlf " ***  ¿Te gusta el hardware? "  crlf " Las posibles respuestas son  [si , no , no se] " crlf )
-    (assert(answer hardware (lowcase (readline))))
-)
 
-(defrule PreguntaSowftare
-    (razonar)
-     (module ALFA)
-    ?rule <- (preguntas sofwtare)
-        =>
-    (retract ?rule)
-    (printout t crlf " *** ¿Dirias que te gusta todo aquello relacionado con el sofwtare ? " crlf " Las posibles respuestas son  [si, no, no se] " crlf)
-    (assert(answer sofwtare (lowcase (readline))))
-)
-
-(defrule PreguntaMatematicas
-    (razonar) 
-    (module ALFA)
-    ?rule <- (preguntas matematicas)
-        =>
-    (retract ?rule)
-    (printout t crlf " *** ¿ Dirias que te gustan las matematicas?" crlf " Las posibles respuestas son [ si , no , no se] " crlf)
-    (assert(answer matematicas (lowcase(readline))))
-)
-(defrule PreguntaNotaMedia
-    (razonar)
-    (module ALFA)
-    ?rule <- (preguntas promedio)
-        =>
-    (retract ?rule)
-    (printout t  crlf " **** ¿Como dirias que es tu nota media? " crlf " Si es mayor que 8 di alto. Si esta entre 6 y 8 di medio . Si es menor que 6 di bajo" crlf )
-    (assert(answer promedio (lowcase(readline))))
-)
-
-(defrule PreguntaEsfuerzo
-    (razonar)
-    (module ALFA)
-    ?rule <- (preguntas esfuerzo)
-        =>
-    (printout t crlf " *** ¿Cual suele ser tu nivel de esfuerzo para hacer una tarea?." crlf " Las posibles respuestas son  [ mucho, medio o poco ] " crlf )
-    (assert(answer esfuerzo (lowcase(readline))))
-    (assert (module BETA))
-)
-
-
-(defrule Recomienda
-    (declare (salience 100))
-    ?rule <- (razonar)
-    (answer hardware ?a)
-    (answer sofwtare ?b)
-    (answer promedio ?c)
-    (answer matematicas ?d)
-    (answer esfuerzo ?e)
-    (recomendacion (Rama_Abrev ?nombre_completo) (Gusta_Hardware $? ?a $?) (Gusta_Software $? ?b $?) (Gusta_Esfuerzo $? ?e $?) (NotaMedia $? ?c $?) (Gusta_Matematicas $? ?d $?) (motivo ?motiv))
-    (rama (abreviatura ?nombre_completo) (nombre_completo ?NombreRama))
-    (module ALFA)
-        =>
-    (retract ?rule)
-    (assert(ans ?NombreRama ?motiv))
-)
 
 
 
