@@ -14,13 +14,13 @@
 ; Nota media
 (deffacts Notam
   ;;;; (Nota 10 Alta)
-  (Nota 7 10.1 Alta) ; 7 > x > 10
+  (Nota 6.9 10.1 Alta) ; 7 > x > 10
 
   ;;;; (Nota 6.9 Media)
   (Nota 5.5 6.9 Media) ; 5.5 > x > 6.9
 
   ;;;; (Nota 5.4 Baja)
-  (Nota 1 5.4 Baja) ; 1 > x > 5.4
+  (Nota 1 5.5 Baja) ; 1 > x > 5.4
 )
 
 (deftemplate rama
