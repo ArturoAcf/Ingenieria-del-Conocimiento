@@ -366,6 +366,8 @@
     ?rule <- (preguntas hardware)
         =>
     (retract ?rule)
+    
+    (printout t crlf "------------" crlf  "COMIENZAN LAS PREGUNTAS DEL EXPERTO VICTOR " crlf "----------" crlf)
     (printout t crlf " ***  ¿Te gusta el hardware? "  crlf " Las posibles respuestas son  [si , no , no se] " crlf )
     (assert(answer hardware (lowcase (readline))))
 )
@@ -445,7 +447,6 @@
      (module GAMMA)
         =>
     (printout t crlf "La rama que se te recomienda el experto Victor es  " ?NombreRama "." crlf " " ?motiv "." crlf)
-    (printout t crlf "Recuerda que esto es solo una recomendacion, lo mejor es que si no estas conforme vuelvas a repetir el programa cambiando un poco los datos o investigues por tu cuenta las ramas " crlf)
 
 )
 
@@ -459,6 +460,6 @@
     (module GAMMA)
     ?rule <- (razonar)
         =>
-    (printout t crlf "Con las respuestas que me has dado no puedo recomendarte nada con seguridad te aconsejo que vuelvas a probar pensando un poco mejor las respuestas" crlf)
+    (printout t crlf "El experto Victor no ha podido recomendarte nada en base a tus respuestas" crlf)
     (retract ?rule)
 )
