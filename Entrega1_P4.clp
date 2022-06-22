@@ -147,8 +147,8 @@
 
 ; Nota media
 (defrule notamedia
-  (module BETA)
   (declare (salience 5000)) ; Es lo primero que le preguntaría
+  (module BETA)
   =>
   (printout t "Bienvenido, dime cual es tu nota media hasta ahora redondeando a la alta por favor: " crlf)
   (assert (Calificacion_media (read))) ; Obtenemos la nota media y podemos saber si es alta, media o baja
@@ -156,8 +156,8 @@
 
 ; Almacena la nota media y guarda un hecho para indicar si es baja, media o alta
 (defrule almacenarNota
-  (module BETA)
   (declare (salience 4999))
+  (module BETA)
   (Calificacion_media ?n)
   (Nota ?x ?y ?val)
   (test (> ?n ?x))
@@ -168,8 +168,8 @@
 
 ; Matemáticas
 (defrule mates
-  (module BETA)
   (declare (salience 4995))
+  (module BETA)
   =>
   (printout t "Te gustan las matematicas?" crlf)
   (assert (mates (read)))
@@ -177,8 +177,8 @@
 
 ; Interés por la programación
 (defrule Iprogramacion
-  (module BETA)
   (declare (salience 4999))
+  (module BETA)
   =>
   (printout t "Tienes interes por la programacion?" crlf)
   (assert (programacion (read)))
@@ -186,8 +186,8 @@
 
 ; Si le gustan las matemáticas y tiene nota media alta o media
 (defrule matesAlta
-  (module BETA)
   (declare (salience 4800))
+  (module BETA)
   (test (neq notaEs Baja)) ; Media o alta
   (mates si)
   (programacion si)
@@ -198,8 +198,8 @@
 
 ; Pregunta en relación a la algorítmica
 (defrule algoritmos
-  (module BETA)
   (declare (salience 4799))
+  (module BETA)
   (podriaSer Computacion_y_Sistemas_Inteligentes)
   =>
   (printout t "Te gustaria desarrollar algoritmos o algo similar?" crlf)
@@ -216,8 +216,8 @@
 
 ; Hardware / Software
 (defrule hardsoft
-  (module BETA)
   (declare (salience 4000))
+  (module BETA)
   =>
   (printout t "Prefieres software o hardware?" crlf)
   (assert (preferencia_sh (read)))
@@ -225,8 +225,8 @@
 
 ; Si tiene nota media o alta y le interesa la programación
 (defrule matesAltMedProg
-  (module BETA)
   (declare (salience 3999))
+  (module BETA)
   (test (neq notaEs Baja)) ; Media o alta
   (programacion si)
   (preferencia_sh software)
@@ -237,8 +237,8 @@
 
 ; Si le gustan las mates, la programacion y prefiere hardware
 (defrule csiHard
-  (module BETA)
   (declare (salience 3950))
+  (module BETA)
   (preferencia_sh hardware)
   (podriaSer Computacion_y_Sistemas_Inteligentes)
   =>
@@ -248,8 +248,8 @@
 
 ; Si le gusta el hardware y no las mates
 (defrule puedeTI
-  (module BETA)
   (declare (salience 3949))
+  (module BETA)
   (preferencia_sh hardware)
   (mates no)
   =>
@@ -259,8 +259,8 @@
 
 ; Robótica
 (defrule robotica
-  (module BETA)
   (declare (salience 3950))
+  (module BETA)
   (podriaSer Ingenieria_de_Computadores)
   =>
   (printout t "Te gusta la robotica?" crlf)
@@ -269,8 +269,8 @@
 
 ; Prácticas / Teóricas
 (defrule practheo
-  (module BETA)
   (declare (salience 3900))
+  (module BETA)
   =>
   (printout t "Prefieres asignaturas practicas o teoricas?" crlf)
   (assert (preferencia_tp (read)))
@@ -278,8 +278,8 @@
 
 ; Gusto por bases de datos
 (defrule gustaBD
-  (module BETA)
   (declare (salience -5002))
+  (module BETA)
   (podriaSer Ingenieria_del_Software)
   (test (or (neq preferencia_tp teoricas) (neq preferencia_tp practicas)))
   =>
@@ -300,8 +300,8 @@
 
 ; Establece el hecho 'consejo Ingenieria_de_Computadores'
 (defrule consejo1
-  (module BETA)
   (declare (salience -5000))
+  (module BETA)
   (podriaSer Ingenieria_de_Computadores)
   (preferencia_tp practicas)
   (robotica si)
@@ -311,8 +311,8 @@
 
 ; Establece el hecho 'consejo Computacion_y_Sistemas_Inteligentes'
 (defrule consejo2
-  (module BETA)
   (declare (salience -5001))
+  (module BETA)
   (podriaSer Computacion_y_Sistemas_Inteligentes)
   (algoritmos si)
   =>
@@ -321,8 +321,8 @@
 
 ; Establece el hecho 'consejo Ingenieria_del_Software'
 (defrule consejo3
-  (module BETA)
   (declare (salience -5002))
+  (module BETA)
   (podriaSer Ingenieria_del_Software)
   =>
   (assert (consejo Ingenieria_del_Software))
@@ -330,8 +330,8 @@
 
 ; Establece el hecho 'consejo Sistemas_de_Informacion'
 (defrule consejo4
-  (module BETA)
   (declare (salience -5003))
+  (module BETA)
   ?regla <- (consejo Ingenieria_del_Software)
   (podriaSer Sistemas_de_Informacion)
   =>
