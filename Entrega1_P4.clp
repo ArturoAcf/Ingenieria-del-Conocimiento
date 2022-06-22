@@ -1,8 +1,7 @@
-;;;;; Arturo Alonso Carbonero ;;;;;
-;;;;; Victor Junco Sánchez ;;;;;
-;;;;; Grupo: 3ºA - A1 ;;;;;
-;;;;; Práctica 4 - Tarea 1 ;;;;;
+;;;;; - - - Hechos del sistema - - - ;;;;;
 
+
+(defmodule sistemaA)
 
 ; Representación de las ramas
 (deffacts Ramas
@@ -69,8 +68,8 @@
 
 ; Si le gustan las matemáticas y tiene nota media alta o media
 (defrule matesAlta
-  (module BETA)
   (declare (salience 4800))
+  (module BETA)
   (test (neq notaEs Baja)) ; Media o alta
   (mates si)
   (programacion si)
@@ -81,6 +80,7 @@
 
 ; Pregunta en relación a la algorítmica
 (defrule algoritmos
+  
   (module BETA)
   (declare (salience 4799))
   (podriaSer Computacion_y_Sistemas_Inteligentes)
@@ -99,7 +99,7 @@
 
 ; Hardware / Software
 (defrule hardsoft
-  (module BETA)
+(module BETA)
   (declare (salience 4000))
   =>
   (printout t "Prefieres software o hardware?" crlf)
@@ -108,7 +108,7 @@
 
 ; Si tiene nota media o alta y le interesa la programación
 (defrule matesAltMedProg
-  (module BETA)
+(module BETA)
   (declare (salience 3999))
   (test (neq notaEs Baja)) ; Media o alta
   (programacion si)
@@ -120,7 +120,7 @@
 
 ; Si le gustan las mates, la programacion y prefiere hardware
 (defrule csiHard
-  (module BETA)
+(module BETA)
   (declare (salience 3950))
   (preferencia_sh hardware)
   (podriaSer Computacion_y_Sistemas_Inteligentes)
@@ -131,7 +131,7 @@
 
 ; Si le gusta el hardware y no las mates
 (defrule puedeTI
-  (module BETA)
+(module BETA)
   (declare (salience 3949))
   (preferencia_sh hardware)
   (mates no)
@@ -142,7 +142,7 @@
 
 ; Robótica
 (defrule robotica
-  (module BETA)
+(module BETA)
   (declare (salience 3950))
   (podriaSer Ingenieria_de_Computadores)
   =>
@@ -152,7 +152,7 @@
 
 ; Prácticas / Teóricas
 (defrule practheo
-  (module BETA)
+(module BETA)
   (declare (salience 3900))
   =>
   (printout t "Prefieres asignaturas practicas o teoricas?" crlf)
@@ -161,7 +161,7 @@
 
 ; Gusto por bases de datos
 (defrule gustaBD
-  (module BETA)
+(module BETA)
   (declare (salience -5002))
   (podriaSer Ingenieria_del_Software)
   (test (or (neq preferencia_tp teoricas) (neq preferencia_tp practicas)))
@@ -172,7 +172,7 @@
 
 ; Deduce que podría ser Sistemas_de_Informacion si le gustan las bases de datos
 (defrule puedeSI
-  (module BETA)
+(module BETA)
   (gustaBD si)
   =>
   (assert (podriaSer Sistemas_de_Informacion))
@@ -183,7 +183,7 @@
 
 ; Establece el hecho 'consejo Ingenieria_de_Computadores'
 (defrule consejo1
-  (module BETA)
+(module BETA)
   (declare (salience -5000))
   (podriaSer Ingenieria_de_Computadores)
   (preferencia_tp practicas)
@@ -194,7 +194,7 @@
 
 ; Establece el hecho 'consejo Computacion_y_Sistemas_Inteligentes'
 (defrule consejo2
-  (module BETA)
+(module BETA)
   (declare (salience -5001))
   (podriaSer Computacion_y_Sistemas_Inteligentes)
   (algoritmos si)
@@ -204,57 +204,35 @@
 
 ; Establece el hecho 'consejo Ingenieria_del_Software'
 (defrule consejo3
-  (module BETA)
+(module BETA)
   (declare (salience -5002))
   (podriaSer Ingenieria_del_Software)
+  (preferencia_tp practicas)
   =>
   (assert (consejo Ingenieria_del_Software))
 )
 
 ; Establece el hecho 'consejo Sistemas_de_Informacion'
 (defrule consejo4
-  (module BETA)
+(module BETA)
   (declare (salience -5003))
-  ?regla <- (consejo Ingenieria_del_Software)
   (podriaSer Sistemas_de_Informacion)
   =>
-  (retract ?regla)
   (assert (consejo Sistemas_de_Informacion))
 )
 
 ; Establece el hecho 'consejo Tecnologias_de_la_Informacion'
 (defrule consejo5
-  ?regla <- (module BETA)
+(module BETA)
+?regla <- (module BETA)
   (declare (salience -5004))
   (or (podriaSer Ingenieria_de_Computadores) (podriaSer Tecnologias_de_la_Informacion))
   (test (neq robotica si))
   =>
   (retract ?regla)
-  (assert (module GAMMA))
   (assert (consejo Tecnologias_de_la_Informacion))
+  (assert (module GAMMA))
 )
-
-
-
-
-
-
-
-; Consejo Final
-(defrule mostrarRamaFinal
-  (module GAMMA)
-  (declare (salience -9999))
-  (consejo ?r)
-  =>
-  (printout t "Arturo te recomienda la rama de " ?r crlf)
-)
-
-
-
-
-
-
-
 
 
 
@@ -372,10 +350,13 @@
         =>
     (printout t crlf "Comienza el Sistema encargado de dar una recomendacion sobre la eleccion de una rama en Ingenieria Informatica en la UGR " crlf)
     (printout t crlf "A continuacion se le haran una serie de preguntas responda de entre las posibles respuestas la que mas le represente " crlf)
+    (printout t crlf "Las primeras preguntas correspondes al experto Victor Junco Sánchez")
     (assert (razonar))
+    (assert (moduloALFA))
 )
 (defrule PreguntaHardware
     (razonar)
+    (module ALFA)
     ?rule <- (preguntas hardware)
         =>
     (retract ?rule)
@@ -385,6 +366,7 @@
 
 (defrule PreguntaSowftare
     (razonar)
+     (module ALFA)
     ?rule <- (preguntas sofwtare)
         =>
     (retract ?rule)
@@ -393,7 +375,8 @@
 )
 
 (defrule PreguntaMatematicas
-    (razonar)
+    (razonar) 
+    (module ALFA)
     ?rule <- (preguntas matematicas)
         =>
     (retract ?rule)
@@ -402,6 +385,7 @@
 )
 (defrule PreguntaNotaMedia
     (razonar)
+    (module ALFA)
     ?rule <- (preguntas promedio)
         =>
     (retract ?rule)
@@ -411,10 +395,12 @@
 
 (defrule PreguntaEsfuerzo
     (razonar)
+    (module ALFA)
     ?rule <- (preguntas esfuerzo)
         =>
     (printout t crlf " *** ¿Cual suele ser tu nivel de esfuerzo para hacer una tarea?." crlf " Las posibles respuestas son  [ mucho, medio o poco ] " crlf )
     (assert(answer esfuerzo (lowcase(readline))))
+    (assert (module BETA))
 )
 
 
@@ -428,6 +414,7 @@
     (answer esfuerzo ?e)
     (recomendacion (Rama_Abrev ?nombre_completo) (Gusta_Hardware $? ?a $?) (Gusta_Software $? ?b $?) (Gusta_Esfuerzo $? ?e $?) (NotaMedia $? ?c $?) (Gusta_Matematicas $? ?d $?) (motivo ?motiv))
     (rama (abreviatura ?nombre_completo) (nombre_completo ?NombreRama))
+    (module ALFA)
         =>
     (retract ?rule)
     (assert(ans ?NombreRama ?motiv))
@@ -435,11 +422,26 @@
 
 
 
+
+; Consejo Final
+(defrule mostrarRamaFinal
+  (declare (salience -9999))
+  (consejo ?r)
+  (module GAMMA)
+  =>
+  (printout t "Arturo te recomienda  la rama de " ?r crlf)
+
+)
+
+
 (defrule MostrarRecomendacion
     (ans ?NombreRama ?motiv)
+     (consejo ?r)
+     (module GAMMA)
         =>
-    (printout t crlf "La rama que se te recomienda es  " ?NombreRama "." crlf " " ?motiv "." crlf)
+    (printout t crlf "La rama que se te recomienda el experto Victor es  " ?NombreRama "." crlf " " ?motiv "." crlf)
     (printout t crlf "Recuerda que esto es solo una recomendacion, lo mejor es que si no estas conforme vuelvas a repetir el programa cambiando un poco los datos o investigues por tu cuenta las ramas " crlf)
+    
 )
 
 (defrule NoTengoRespuesta
@@ -449,10 +451,9 @@
     (answer sofwtare ? )
     (answer matematicas ?)
     (answer promedio?|esfuerzo ? )
-
+    (module gamma)
     ?rule <- (razonar)
         =>
     (printout t crlf "Con las respuestas que me has dado no puedo recomendarte nada con seguridad te aconsejo que vuelvas a probar pensando un poco mejor las respuestas" crlf)
     (retract ?rule)
 )
-
